@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "766676927515",
+    "firebase_url": "https://labour-booking.firebaseio.com",
+    "project_id": "labour-booking",
+    "storage_bucket": "labour-booking.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:766676927515:android:b64a1565d5af7584ade4be",
+        "android_client_info": {
+          "package_name": "com.example.labourbooking"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "766676927515-3dgfhvqglhkj5uqsg07l0lup55i4ssi6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.labourbooking",
+            "certificate_hash": "713f64c6870327de886a1eff613091124e339a2f"
+          }
+        },
+        {
+          "client_id": "766676927515-k46i08ssfgrq8n8j0u843ia5ej7c9u30.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.labourbooking",
+            "certificate_hash": "354ee4092bc25e82f2ba6119bdf546d589369d56"
+          }
+        },
+        {
+          "client_id": "766676927515-h30pd6pcphlj1uq9jadqa58ed8dqif24.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVdgRdgSXZUko-NssP1FxceIUaDMN6eEY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "766676927515-h30pd6pcphlj1uq9jadqa58ed8dqif24.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

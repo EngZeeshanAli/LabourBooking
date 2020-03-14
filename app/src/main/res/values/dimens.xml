@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="high_style">20sp</dimen>
+    <dimen name="norm_style">18sp</dimen>
+
+</resources>
