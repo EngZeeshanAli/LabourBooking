@@ -16,15 +16,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".startups.WorkDetail"></activity>
+        <activity android:name=".chatapp.ChatRoom"></activity>
+        <activity android:name=".startups.WorkDetail" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/map_api_key" />
 
         <activity android:name=".startups.Profile" />
-        <activity android:name=".startups.Dashboard"
-            />
+        <activity android:name=".startups.Dashboard" />
         <activity android:name=".startups.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,6 +38,18 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+
+        <service
+            android:name=".chatapp.NotifationsAndServices.MyFirebaseMessaging"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
     </application>
+
 
 </manifest>

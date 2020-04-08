@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:contentPadding="20dp"
+    android:layout_marginRight="20dp"
+    android:layout_marginLeft="20dp"
+    app:cardCornerRadius="20dp"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="You need to sign in to delete you account."
+            android:textColor="#000000"
+            android:textSize="20dp" />
+
+        <EditText
+            android:id="@+id/email_dell"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="email"
+            android:inputType="textEmailAddress"
+            android:paddingLeft="5dp" />
+
+        <EditText
+            android:id="@+id/pass_dell"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="passwordP"
+            android:inputType="numberPassword"
+            android:paddingLeft="5dp" />
+        <Button
+            android:id="@+id/confirm_dell"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorWhite"
+            android:text="DELETE ACCOUNT"
+            android:backgroundTint="@color/colorRed"
+            android:layout_marginTop="10dp"/>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

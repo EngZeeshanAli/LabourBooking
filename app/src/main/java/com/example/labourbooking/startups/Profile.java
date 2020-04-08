@@ -3,20 +3,23 @@ package com.example.labourbooking.startups;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,6 +33,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -57,8 +62,9 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
     Dialog processing;
     ImageView updateImg;
     CircleImageView userImg;
-    Button update, deleteAcc;
+    Button  deleteAcc;
     User user;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,8 +89,6 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
         updateImg = findViewById(R.id.update_img_profile);
         updateImg.setOnClickListener(this);
         userImg = findViewById(R.id.profile_image_profile);
-        update = findViewById(R.id.update_profile);
-        update.setOnClickListener(this);
         deleteAcc = findViewById(R.id.delete_my_account);
         deleteAcc.setOnClickListener(this);
         getUser(mUser.getUid());
@@ -220,18 +224,12 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
                 AlertDialog.Builder builder = Controlers.selectImage(Profile.this);
                 builder.show();
                 break;
-            case R.id.update_profile:
-                setUpdateProfile();
-                break;
             case R.id.delete_my_account:
-
+                setDeleteAcc();
                 break;
         }
     }
 
-    private void setUpdateProfile() {
-
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -263,10 +261,56 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
                                 cursor.close();
                             }
                         }
-
                     }
                     break;
             }
         }
     }
+
+    void setDeleteAcc() {
+        final Dialog delAcc = new Dialog(this);
+        delAcc.setContentView(R.layout.del_acc);
+        delAcc.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        final EditText email = delAcc.findViewById(R.id.email_dell);
+        final EditText pass = delAcc.findViewById(R.id.pass_dell);
+        Button dell = delAcc.findViewById(R.id.confirm_dell);
+        dell.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (TextUtils.isEmpty(email.getText().toString())) {
+                    email.setError("empty");
+                    return;
+                }
+                if (TextUtils.isEmpty(pass.getText().toString())) {
+                    pass.setError("empty");
+                } else {
+                    AuthCredential credential = EmailAuthProvider
+                            .getCredential(email.getText().toString(), pass.getText().toString());
+
+                    // Prompt the user to re-provide their sign-in credentials
+                    mUser.reauthenticate(credential)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    mUser.delete()
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (task.isSuccessful()) {
+                                                        delAcc.dismiss();
+                                                        Toast.makeText(Profile.this, "Account Deleted Successfully.", Toast.LENGTH_SHORT).show();
+                                                        finish();
+                                                        startActivity(new Intent(Profile.this, Login.class));
+                                                    }
+                                                }
+                                            });
+
+                                }
+                            });
+                }
+            }
+        });
+        delAcc.show();
+    }
+
 }

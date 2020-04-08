@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <LinearLayout
+        android:id="@+id/sender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:background="@color/colorAccent"
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/sendermsg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="msg"
+            android:textColor="@color/colorWhite" />
+
+        <TextView
+            android:id="@+id/sendertime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text="time"
+            android:textColor="@color/colorWhite"
+            android:textSize="8dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/my"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:background="@color/colorParrot"
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/mymsg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="weqrew"
+            android:maxWidth="200dp"
+            android:textColor="@color/colorWhite" />
+
+        <TextView
+            android:id="@+id/mytime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text="time"
+            android:textColor="@color/colorWhite"
+            android:textSize="8dp" />
+    </LinearLayout>
+
+
+</LinearLayout>

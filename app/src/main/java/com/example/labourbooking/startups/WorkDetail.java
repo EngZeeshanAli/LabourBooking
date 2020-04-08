@@ -63,6 +63,7 @@ public class WorkDetail extends AppCompatActivity implements View.OnClickListene
     ImageView taskImage;
     LatLng latLng;
     NestedScrollView scrollTo;
+    Post post;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,8 +102,6 @@ public class WorkDetail extends AppCompatActivity implements View.OnClickListene
         return intent.getStringExtra("id");
     }
 
-
-
     private void getUser(final String uid) {
         final DatabaseReference reff = FirebaseDatabase.getInstance().getReference();
         reff.child(Constants.USER_TABLE).child(uid).addValueEventListener(new ValueEventListener() {
@@ -136,11 +135,11 @@ public class WorkDetail extends AppCompatActivity implements View.OnClickListene
     void getTask(String key) {
         processing.show();
         DatabaseReference db = FirebaseDatabase.getInstance().getReference();
-        db.child(Constants.POST_TABLE).child(key).addValueEventListener(new ValueEventListener() {
+        db.child(Constants.POST_TABLE).child(key).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot != null) {
-                    Post post = dataSnapshot.getValue(Post.class);
+                    post = dataSnapshot.getValue(Post.class);
                     if (!post.getTitle().isEmpty()) {
                         title.setText(post.getTitle());
                         description.setText(post.getDescription());
@@ -173,7 +172,7 @@ public class WorkDetail extends AppCompatActivity implements View.OnClickListene
         ofersList = new ArrayList<>();
         ofersId = new ArrayList<>();
         DatabaseReference rf = FirebaseDatabase.getInstance().getReference();
-        rf.child(Constants.OFFERS_TABLE).child(getKey()).addValueEventListener(new ValueEventListener() {
+        rf.child(Constants.OFFERS_TABLE).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ofersList.clear();
@@ -185,7 +184,7 @@ public class WorkDetail extends AppCompatActivity implements View.OnClickListene
                 }
                 Collections.reverse(ofersList);
                 Collections.reverse(ofersId);
-                    offers.setAdapter(new OfferAdapter(WorkDetail.this, ofersList, ofersId, getKey()));
+                offers.setAdapter(new OfferAdapter(WorkDetail.this, ofersList, ofersId, getKey()));
             }
 
             @Override
@@ -203,9 +202,9 @@ public class WorkDetail extends AppCompatActivity implements View.OnClickListene
             offer.setError("empty");
             return;
         } else {
-            final Offer offerPost = new Offer(user.getUid(), this.offer.getText().toString());
+            final Offer offerPost = new Offer(user.getUid(), this.offer.getText().toString(), getKey());
             DatabaseReference rf = FirebaseDatabase.getInstance().getReference();
-            rf.child(Constants.OFFERS_TABLE).child(getKey()).child(user.getUid()).setValue(offerPost)
+            rf.child(Constants.OFFERS_TABLE).push().setValue(offerPost)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
@@ -230,12 +229,17 @@ public class WorkDetail extends AppCompatActivity implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.make_offer:
-                offer.setVisibility(View.VISIBLE);
-                submitOffer.setVisibility(View.VISIBLE);
-focusOnView();
+
+                if (post.getPosterId().equals(user.getUid())) {
+                    Controlers.topToast(WorkDetail.this, "You cant make offer on your own work..");
+                } else {
+                    offer.setVisibility(View.VISIBLE);
+                    submitOffer.setVisibility(View.VISIBLE);
+                    focusOnView();
+                }
+
                 break;
             case R.id.submi_offer:
-
                 setOffer();
                 break;
             case R.id.exit_work_detail:

@@ -104,6 +104,7 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
                 newids.add(ids.get(i));
             }
         }
+
         if (!newposts.isEmpty()) {
             adapter.updateList(newposts, newids);
         }

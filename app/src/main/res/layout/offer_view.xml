@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="100dp"
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp"
     android:layout_marginBottom="10dp"
+    android:minHeight="100dp"
     app:cardCornerRadius="10dp"
     app:cardElevation="10dp"
     app:contentPadding="10dp">
@@ -56,18 +56,21 @@
                 android:text="@string/app_name" />
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <Button
                 android:id="@+id/open_offer"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:backgroundTint="@color/colorPrimary"
-                android:text="open"
+                android:text="expand"
                 android:textColor="@color/colorWhite" />
+
             <Button
                 android:id="@+id/delete_Offer"
                 android:layout_width="wrap_content"
@@ -75,7 +78,18 @@
                 android:layout_gravity="center"
                 android:backgroundTint="@color/colorRed"
                 android:text="delte"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/colorWhite"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/message_Offer"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:text="Message"
+                android:textColor="@color/colorWhite"
+                android:visibility="gone" />
 
         </LinearLayout>
 

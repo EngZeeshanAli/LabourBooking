@@ -2,6 +2,7 @@ package com.example.labourbooking.startups;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Message;
 import android.os.PersistableBundle;
 import android.view.MenuItem;
 import android.view.WindowManager;
@@ -16,6 +17,7 @@ import com.example.labourbooking.Fragments.MyTasks;
 import com.example.labourbooking.Fragments.PostTask;
 import com.example.labourbooking.Fragments.SearchFragment;
 import com.example.labourbooking.R;
+import com.example.labourbooking.chatapp.ChatBoard;
 import com.example.labourbooking.controlers.Controlers;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -63,6 +65,10 @@ public class Dashboard extends AppCompatActivity implements BottomNavigationView
             case R.id.post:
                 Controlers.removeStackFragments(getSupportFragmentManager());
                 getSupportFragmentManager().beginTransaction().replace(R.id.fg_cnotainer, new PostTask(), "post").commit();
+                break;
+                case R.id.messages:
+                Controlers.removeStackFragments(getSupportFragmentManager());
+                getSupportFragmentManager().beginTransaction().replace(R.id.fg_cnotainer, new ChatBoard(), "msg").commit();
                 break;
 
         }

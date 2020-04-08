@@ -154,8 +154,6 @@ public class PostTask extends Fragment implements View.OnClickListener {
                                 });
                     }
                 });
-
-
             }
         })
                 .addOnFailureListener(new OnFailureListener() {
@@ -165,7 +163,6 @@ public class PostTask extends Fragment implements View.OnClickListener {
                         processing.dismiss();
                     }
                 });
-
     }
 
 
@@ -222,7 +219,7 @@ public class PostTask extends Fragment implements View.OnClickListener {
                         mMap.clear();
                         mMap.addMarker(new MarkerOptions().position(new LatLng(arg0.getLatitude(), arg0.getLongitude())).title("It's Me!"));
                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(arg0.getLatitude(), arg0.getLongitude()), 18));
-                        location = String.valueOf(arg0.getLatitude() +"#"+ arg0.getLongitude());
+                        location = String.valueOf(arg0.getLatitude() + "#" + arg0.getLongitude());
                     }
                 });
             }
@@ -372,7 +369,7 @@ public class PostTask extends Fragment implements View.OnClickListener {
                                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                                 String picturePath = cursor.getString(columnIndex);
                                 uploadedImage.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-                                selectedImages=selectedImage;
+                                selectedImages = selectedImage;
                                 checkImageAction = 2;
                                 cursor.close();
                             }

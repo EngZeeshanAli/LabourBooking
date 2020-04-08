@@ -143,8 +143,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:fontFamily="sans-serif-black"
-                             />
+                            android:fontFamily="sans-serif-black" />
                     </TableRow>
 
                     <TableRow
@@ -167,37 +166,25 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:fontFamily="sans-serif-black"
-                            />
+                            android:fontFamily="sans-serif-black" />
 
                     </TableRow>
 
                     <TableRow
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_weight="2"
                         android:background="@drawable/tabel_border"
-                        android:padding="10dp"
                         android:gravity="center"
-                        android:layout_weight="2">
-                        <Button
-                            android:id="@+id/update_profile"
-                            android:layout_width="150dp"
-                            android:layout_height="wrap_content"
-                            android:backgroundTint="@color/colorParrot"
-                            android:text="update profile"
-                            android:layout_weight="1"
-                            android:textColor="@color/colorWhite"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/cardView2" />
+                        android:padding="10dp">
+
                         <Button
                             android:id="@+id/delete_my_account"
                             android:layout_width="150dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:backgroundTint="@color/colorRed"
                             android:text="Delete account"
-                            android:layout_weight="1"
                             android:textColor="@color/colorWhite"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"

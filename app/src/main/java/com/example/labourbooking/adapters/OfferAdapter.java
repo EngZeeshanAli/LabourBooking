@@ -1,6 +1,7 @@
 package com.example.labourbooking.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +14,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.labourbooking.R;
+import com.example.labourbooking.chatapp.ChatRoom;
 import com.example.labourbooking.controlers.Constants;
 import com.example.labourbooking.controlers.Controlers;
 import com.example.labourbooking.obj.Offer;
+import com.example.labourbooking.obj.Post;
 import com.example.labourbooking.obj.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -49,8 +52,6 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.Item> {
     }
 
 
-
-
     @NonNull
     @Override
     public Item onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -73,21 +74,24 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.Item> {
                 }
             });
         }
+
         holder.open.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (show) {
                     holder.offer.setMaxLines(3);
-                    holder.open.setText("open");
+                    holder.open.setText("expand");
                     show = false;
                 } else {
                     holder.offer.setMaxLines(100);
-                    holder.open.setText("hide");
-                    show=true;
+                    holder.open.setText("minimize");
+                    show = true;
                 }
 
             }
         });
+
+        getPost(holder.message, offer.getOffererId());
 
 
     }
@@ -99,7 +103,7 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.Item> {
 
     public class Item extends RecyclerView.ViewHolder {
         CircleImageView img;
-        Button delte, open;
+        Button delte, open, message;
         TextView name, offer;
 
         public Item(@NonNull View itemView) {
@@ -109,23 +113,24 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.Item> {
             offer = itemView.findViewById(R.id.offer_descrption);
             delte = itemView.findViewById(R.id.delete_Offer);
             open = itemView.findViewById(R.id.open_offer);
-
+            message = itemView.findViewById(R.id.message_Offer);
         }
     }
 
     private void getUser(final String uid, final TextView name, final CircleImageView img) {
         final DatabaseReference reff = FirebaseDatabase.getInstance().getReference();
-        reff.child(Constants.USER_TABLE).child(uid).addValueEventListener(new ValueEventListener() {
+        reff.child(Constants.USER_TABLE).child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                name.setText(user.getName());
-                Glide.with(c)
-                        .load(user.getImg())
-                        .centerCrop()
-                        .placeholder(R.drawable.placeholder)
-                        .into(img);
-
+                if (user != null) {
+                    name.setText(user.getName());
+                    Glide.with(c)
+                            .load(user.getImg())
+                            .centerCrop()
+                            .placeholder(R.drawable.placeholder)
+                            .into(img);
+                }
             }
 
             @Override
@@ -138,13 +143,41 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.Item> {
     private void deleteOffer(final String id, final int position) {
         notifyDataSetChanged();
         DatabaseReference db = FirebaseDatabase.getInstance().getReference();
-        db.child(Constants.OFFERS_TABLE).child(key).child(id).removeValue()
+        db.child(Constants.OFFERS_TABLE).child(id).removeValue()
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-
+                        if (task.isSuccessful()) {
+                            Toast.makeText(c, "Deleted Succesfully..", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
     }
 
+    void getPost(final Button message, final String id) {
+        DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+        db.child(Constants.POST_TABLE).child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Post post = dataSnapshot.getValue(Post.class);
+                if (post.getPosterId().equals(user.getUid())) {
+                    message.setVisibility(View.VISIBLE);
+                    message.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent i = new Intent(c, ChatRoom.class);
+                            i.putExtra("id", id);
+                            c.startActivity(i);
+                        }
+                    });
+                }
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
 }

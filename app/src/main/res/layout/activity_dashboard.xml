@@ -4,20 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".startups.Dashboard"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".startups.Dashboard">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/colorParrot"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:title="@string/app_name"
-        app:titleTextColor="@color/colorWhite"
-        android:background="@color/colorParrot"
-        />
+        app:titleTextColor="@color/colorWhite" />
 
     <FrameLayout
         android:id="@+id/fg_cnotainer"

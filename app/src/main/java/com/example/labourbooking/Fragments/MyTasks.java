@@ -30,9 +30,8 @@ public class MyTasks extends Fragment {
 
     private void initGui(View v) {
         tabs = v.findViewById(R.id.tabLayout);
-        tabs.addTab(tabs.newTab().setText("Offered Works"));
+        tabs.addTab(tabs.newTab().setText("My Works"));
         tabs.addTab(tabs.newTab().setText("Posted Works"));
-
         pager = v.findViewById(R.id.viewPager);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity(), getActivity().getSupportFragmentManager(), tabs.getTabCount());
         pager.setAdapter(adapter);
@@ -70,15 +69,15 @@ public class MyTasks extends Fragment {
         @NonNull
         @Override
         public Fragment getItem(int position) {
-            OffersWorks offersWorks = new OffersWorks();
+            MyWorks myWorks = new MyWorks();
             PostedWroks postedWroks = new PostedWroks();
             switch (position) {
                 case 0:
-                    return offersWorks;
+                    return myWorks;
                 case 1:
                     return postedWroks;
                 default:
-                    return offersWorks;
+                    return myWorks;
             }
         }
 

@@ -1,8 +1,6 @@
 package com.example.labourbooking.adapters;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,8 +17,6 @@ import com.example.labourbooking.controlers.Constants;
 import com.example.labourbooking.obj.Post;
 import com.example.labourbooking.obj.User;
 import com.example.labourbooking.startups.WorkDetail;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -33,17 +29,17 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MyPostedAdapter extends RecyclerView.Adapter<MyPostedAdapter.Item> {
+public class OffererdWorksAdapter extends RecyclerView.Adapter<OffererdWorksAdapter.Item> {
     Context c;
     ArrayList<Post> posts;
     ArrayList<String> ids;
     FirebaseUser user;
 
-    public MyPostedAdapter(Context c, ArrayList<Post> posts, ArrayList<String> ids) {
+    public OffererdWorksAdapter(Context c, ArrayList<Post> posts, ArrayList<String> ids) {
         this.c = c;
         this.posts = posts;
         this.ids = ids;
-        user = FirebaseAuth.getInstance().getCurrentUser();
+        this.user = FirebaseAuth.getInstance().getCurrentUser();
     }
 
     @NonNull
@@ -69,31 +65,6 @@ public class MyPostedAdapter extends RecyclerView.Adapter<MyPostedAdapter.Item> 
             }
         });
 
-        holder.delete.setVisibility(View.VISIBLE);
-        holder.delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(c);
-                builder.setMessage("Do you really want to delete?");
-                builder.setTitle("Delete");
-                builder.setIcon(R.drawable.cartoon);
-                builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        deleteOffer(ids.get(position));
-                        dialog.dismiss();
-                    }
-                });
-                builder.setNegativeButton("Cancell", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                builder.show();
-            }
-        });
-
     }
 
     @Override
@@ -103,7 +74,7 @@ public class MyPostedAdapter extends RecyclerView.Adapter<MyPostedAdapter.Item> 
 
     public class Item extends RecyclerView.ViewHolder {
         TextView title, descriptoin;
-        Button open, delete;
+        Button open;
         CircleImageView img;
 
         public Item(@NonNull View itemView) {
@@ -112,7 +83,7 @@ public class MyPostedAdapter extends RecyclerView.Adapter<MyPostedAdapter.Item> 
             title = itemView.findViewById(R.id.offerer_name);
             descriptoin = itemView.findViewById(R.id.offer_descrption);
             open = itemView.findViewById(R.id.open_offer);
-            delete = itemView.findViewById(R.id.delete_Offer);
+
         }
     }
 
@@ -136,16 +107,5 @@ public class MyPostedAdapter extends RecyclerView.Adapter<MyPostedAdapter.Item> 
         });
     }
 
-    private void deleteOffer(String id) {
-        notifyDataSetChanged();
-        DatabaseReference db = FirebaseDatabase.getInstance().getReference();
-        db.child(Constants.POST_TABLE).child(id).removeValue()
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-
-                    }
-                });
-    }
 
 }
